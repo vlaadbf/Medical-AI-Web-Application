@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🩺 Fișa pacientului: {{ pacient.first_name }} {{ pacient.last_name }}</h2>
+
+<p><strong>Email:</strong> {{ pacient.email }}</p>
+<p><strong>Sex:</strong> {{ pacient.sex }}</p>
+<p><strong>Județ:</strong> {{ pacient.judet }}</p>
+<p><strong>Data nașterii:</strong> {{ pacient.birthdate }}</p>
+<p><strong>Fumător:</strong> {{ "Da" if pacient.smoker else "Nu" }}</p>
+{% if pacient.smoker %}
+    <p><strong>Fumează din:</strong> {{ pacient.smoker_since }}</p>
+    <p><strong>Ani de fumat:</strong> {{ pacient.smoker_years }}</p>
+{% endif %}
+
+<hr>
+<h3>🖼️ Imagini în așteptare</h3>
+{% if pacient.pending_images %}
+    <a  href="{{ url_for('detalii_pacient', email=pacient.email) }}?predict=1">
+    <button>🔍 Rulează predicția</button>
+</a>
+    <br>
+    <div id="preview" style="display:flex; flex-wrap:wrap; gap:12px; margin:5px">
+    {% for fname in pacient.pending_images[:0] %}
+        <img src="{{ url_for('static', filename='uploads/' ~ fname) }}" style="width:170px; border-radius:8px;">
+    {% endfor %}
+</div>
+
+{% if pacient.pending_images|length > 4 %}
+    <button onclick="document.getElementById('all-previews').style.display='flex'; this.style.display='none';">👁️‍🗨️ Vezi toate imaginile</button>
+    <div id="all-previews" style="display:none; flex-wrap:wrap; gap:12px;">
+        {% for fname in pacient.pending_images %}
+            <img src="{{ url_for('static', filename='uploads/' ~ fname) }}" style="width:170px; border-radius:8px;">
+        {% endfor %}
+    </div>
+{% endif %}
+
+{% else %}
+    <p style="color:gray">Nu există imagini pentru analiză.</p>
+{% endif %}
+
+{% if predictions %}
+<hr>
+<h3>📈 Rezultatele modelului</h3>
+<div style="display:flex; flex-wrap:wrap; gap:16px;">
+    {% for p in predictions %}
+        <div style="text-align:center;">
+            <img src="{{ url_for('static', filename='uploads/' ~ p.img) }}" style="width:200px; border-radius:8px;">
+            <p><strong>{{ p.label }}</strong><br><span style="color:gray">{{ p.conf }}</span></p>
+        </div>
+    {% endfor %}
+</div>
+
+{% if mean_prediction %}
+    <p><strong>📊 Predicție generală:</strong> {{ mean_prediction.label }} ({{ mean_prediction.score }})</p>
+{% endif %}
+
+<hr>
+<h3>📤 Trimite rezultate pacientului</h3>
+<form method="POST">
+    <textarea name="mesaj" rows="4" cols="60" placeholder="Scrie diagnosticul..." required></textarea><br>
+    <input type="submit" value="Trimite diagnosticul și rezultatul">
+</form>
+{% endif %}
+
+{% endblock %}

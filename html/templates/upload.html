@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📤 Încarcă imagini CT pentru analiză</h2>
+
+{% if doctor %}
+    <p><strong>Imaginile vor fi trimise către:</strong> {{ doctor.first_name }} {{ doctor.last_name }}</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="images" multiple required><br><br>
+        <input type="submit" value="Încarcă imaginile">
+    </form>
+{% else %}
+    <p style="color: red;">❌ Nu ești asociat cu niciun doctor aprobat. Trimite mai întâi o cerere.</p>
+{% endif %}
+{% endblock %}

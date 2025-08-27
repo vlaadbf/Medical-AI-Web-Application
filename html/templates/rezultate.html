@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📊 Rezultatele Analizei</h2>
+
+{% if result %}
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Data</th>
+            <th>Predicție model</th>
+            <th>Diagnostic medic</th>
+            <th>Imagini analizate</th>
+        </tr>
+        <tr>
+            <td>{{ result.date }}</td>
+            <td>{{ result.summary.label }} ({{ result.summary.score }})</td>
+            <td>{{ result.message }}</td>
+            <td>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                    {% for img in result.images[:4] %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ img) }}" style="width:100px; border-radius:6px;">
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
+{% else %}
+    <p style="color:gray;">Nu există rezultate disponibile momentan.</p>
+{% endif %}
+{% endblock %}

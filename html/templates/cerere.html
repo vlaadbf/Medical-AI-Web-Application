@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>📨 Cerere către doctor</h2>
+
+{% if approved %}
+    <p style="color:green;"><strong>✅ Cererea ta a fost aprobată!</strong></p>
+    <table border="1" cellpadding="6">
+        <tr><th>Nume doctor</th><th>Email</th><th>Spital</th></tr>
+        <tr>
+            <td>{{ doctor.first_name }} {{ doctor.last_name }}</td>
+            <td>{{ doctor.email }}</td>
+            <td>{{ doctor.spital }}</td>
+        </tr>
+    </table>
+{% elif doctor %}
+    <p style="color:orange;"><strong>⏳ Cererea ta este în așteptare.</strong></p>
+    <table border="1" cellpadding="6">
+        <tr><th>Email doctor</th></tr>
+        <tr><td>{{ doctor.email }}</td></tr>
+    </table>
+{% else %}
+    <form method="POST">
+        <label>Alege un doctor:</label>
+        <select name="doctor" required>
+            {% for doc in doctors %}
+            <option value="{{ doc.email }}">{{ doc.first_name }} {{ doc.last_name }} - {{ doc.email }}</option>
+            {% endfor %}
+        </select><br><br>
+        <input type="submit" value="Trimite cererea">
+    </form>
+{% endif %}
+
+{% endblock %}

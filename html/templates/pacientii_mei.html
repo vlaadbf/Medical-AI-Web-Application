@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+
+    h2 {
+        text-align: center;
+        color: #002b5b;
+        margin-bottom: 40px;
+        font-size: 1.8rem;
+    }
+
+    table {
+        width: 95%;
+        max-width: 1200px;
+        margin: 0 auto;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.07);
+        overflow: hidden;
+    }
+
+    th, td {
+        padding: 16px 20px;
+        text-align: left;
+        border-bottom: 1px solid #f0f0f0;
+        font-size: 0.95rem;
+    }
+
+    th {
+        background-color: #009fdc;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    tbody tr:hover {
+        background-color: #f4fbff;
+    }
+
+    td a {
+        text-decoration: none;
+        background-color: #007bff;
+        color: white;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        transition: background 0.3s ease;
+    }
+
+    td a:hover {
+        background-color: #005fa3;
+    }
+
+    .icon-male {
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .icon-female {
+        color: #e83e8c;
+        font-weight: bold;
+    }
+
+    .tag {
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        thead {
+            display: none;
+        }
+
+        tr {
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px 15px;
+            position: relative;
+        }
+
+        td::before {
+            content: attr(data-label);
+            font-weight: bold;
+            display: block;
+            margin-bottom: 4px;
+            color: #007bff;
+        }
+    }
+    th.col-narrow, td.col-narrow {
+        width: 80px; 
+        text-align: center;
+    }
+</style>
+
+<h2>📋 Lista pacienților aprobați</h2>
+<div style="text-align:center; margin-bottom: 20px;">
+    <form method="get" action="{{ url_for('pacientii_mei') }}">
+        <input type="text" name="search" value="{{ search }}" placeholder="🔍 Caută după nume sau email..." style="padding: 8px 12px; width: 280px; border-radius: 10px; border: 1px solid #ccc;">
+        <button type="submit" style="padding: 8px 16px; border-radius: 10px; background-color: #007bff; color: white;">Caută</button>
+    </form>
+</div>
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Nume complet</th>
+            <th>Județ</th>
+            <th>Sex</th>
+            <th>Vârstă</th>
+            <th>Fumător</th>
+            <th>Email</th>
+            <th class="col-narrow">Imagini</th>
+            <th class="col-narrow">Testări</th>
+            <th>Acțiune</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in pacienti %}
+        <tr>
+            <td data-label="#" style="text-align:center;">{{ loop.index + ((pagina - 1) * 10) }}</td>
+
+            <td data-label="Nume complet">{{ p.full_name }}</td>
+            <td data-label="Județ">{{ p.judet }}</td>
+            <td data-label="Sex">
+                {% if p.sex == 'M' %}
+                    <span class="icon-male">♂</span>
+                {% elif p.sex == 'F' %}
+                    <span class="icon-female">♀</span>
+                {% else %}
+                    ❓
+                {% endif %}
+            </td>
+            <td data-label="Vârstă">{{ p.varsta }}</td>
+            <td data-label="Fumător">
+                {% if p.smoker %}
+                    ✅
+                {% else %}
+                    🚭
+                {% endif %}
+            </td>
+            <td data-label="Email">{{ p.email }}</td>
+            <td class="col-narrow" data-label="Imagini">{{ p.pending }}</td>
+            <td class="col-narrow" data-label="Testări">{{ p.istoric }}</td>
+            <td data-label="Acțiune">
+                <a href="/detalii_pacient/{{ p.email }}">🔍 Detalii</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    
+</table>
+<div style="text-align:center; margin-top: 20px;">
+    {% if pagina > 1 %}
+        <a href="{{ url_for('pacientii_mei', page=pagina-1, search=search) }}">⬅️ Anterior</a>
+    {% endif %}
+
+    <span style="margin: 0 10px;">Pagina {{ pagina }} din {{ total_pagini }}</span>
+
+    {% if pagina < total_pagini %}
+        <a href="{{ url_for('pacientii_mei', page=pagina+1, search=search) }}">Următor ➡️</a>
+    {% endif %}
+</div>
+<script>
+function filterTable() {
+    const input = document.getElementById("searchInput");
+    const filter = input.value.toLowerCase();
+    const rows = document.querySelectorAll("tbody tr");
+
+    rows.forEach(row => {
+        const name = row.cells[1]?.textContent.toLowerCase();
+        const email = row.cells[6]?.textContent.toLowerCase();
+        row.style.display = (name.includes(filter) || email.includes(filter)) ? "" : "none";
+    });
+}
+</script>
+{% endblock %}

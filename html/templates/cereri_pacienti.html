@@ -1,0 +1,11 @@
+
+    {% extends "base.html" %}
+    {% block content %}
+    <h2>Cereri în așteptare</h2>
+        {% for pacient in cereri %}
+            <p>{{ pacient.first_name }} {{ pacient.last_name }}
+            <a href="/aproba/{{ pacient.email }}">Aprobă</a></p>
+        {% else %}
+            <p>Nu ai cereri noi.</p>
+        {% endfor %}
+    {% endblock %}
