@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Upload PDF File with Diabetes Test Results</h2>
+
+<form method="POST" enctype="multipart/form-data">
+    <input type="email" name="email" value="{{ user.email }}" readonly hidden>
+    Selectează PDF: <input type="file" name="pdf_file" accept=".pdf" required><br><br>
+    <input type="submit" value="Trimite">
+</form>
+{% endblock %}

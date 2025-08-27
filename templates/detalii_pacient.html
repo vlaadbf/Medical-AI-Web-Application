@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>🩺 Patient Record: {{ pacient.first_name }} {{ pacient.last_name }}</h2>
+
+<p><strong>Email:</strong> {{ pacient.email }}</p>
+<p><strong>Sex:</strong> {{ pacient.sex }}</p>
+<p><strong>County:</strong> {{ pacient.judet }}</p>
+<p><strong>Birth Date:</strong> {{ pacient.birthdate }}</p>
+<p><strong>Smoker:</strong> {{ "Da" if pacient.smoker else "Nu" }}</p>
+{% if pacient.smoker %}
+    <p><strong>Smoking Since:</strong> {{ pacient.smoker_since }}</p>
+    <p><strong>Years of Smoking:</strong> {{ pacient.smoker_years }}</p>
+{% endif %}
+
+<hr>
+<h3>🖼️ Pending Images</h3>
+{% if pacient.pending_images %}
+    <a href="{{ url_for('detalii_pacient', email=pacient.email) }}?predict=1">
+        <button>🔍 Run Prediction</button>
+    </a>
+    <br>
+    <div id="preview" style="display:flex; flex-wrap:wrap; gap:12px; margin:5px">
+        {% for fname in pacient.pending_images[:0] %}
+            <img src="{{ url_for('static', filename='uploads/' ~ fname) }}" style="width:170px; border-radius:8px;">
+        {% endfor %}
+    </div>
+
+    {% if pacient.pending_images|length > 4 %}
+        <button onclick="document.getElementById('all-previews').style.display='flex'; this.style.display='none';">
+            👁️‍🗨️ View All Images
+        </button>
+        <div id="all-previews" style="display:none; flex-wrap:wrap; gap:12px;">
+            {% for fname in pacient.pending_images %}
+                <img src="{{ url_for('static', filename='uploads/' ~ fname) }}" style="width:170px; border-radius:8px;">
+            {% endfor %}
+        </div>
+    {% endif %}
+{% else %}
+    <p style="color:gray">There are no images for analysis.</p>
+{% endif %}
+
+{% if predictions %}
+<hr>
+<h3>📈 Model Results</h3>
+<div style="display:flex; flex-wrap:wrap; gap:16px;">
+    {% for p in predictions %}
+        <div style="text-align:center;">
+            <img src="{{ url_for('static', filename='uploads/' ~ p.img) }}" style="width:200px; border-radius:8px;">
+            <p><strong>{{ p.label }}</strong><br><span style="color:gray">{{ p.conf }}</span></p>
+        </div>
+    {% endfor %}
+</div>
+
+{% if mean_prediction %}
+    <p><strong>📊 Overall Prediction:</strong> {{ mean_prediction.label }} ({{ mean_prediction.score }})</p>
+{% endif %}
+
+<hr>
+<h3>📤 Send Results to Patient</h3>
+<form method="POST">
+    <textarea name="mesaj" rows="4" cols="60" placeholder="Write the diagnosis..." required></textarea><br>
+    <input type="submit" value="Send Diagnosis and Result">
+</form>
+{% endif %}
+
+{% if diabet_results %}
+<hr>
+<h3>🧾 Diabetes Test Results</h3>
+<table border="1" cellpadding="8" style="border-collapse: collapse; margin-top: 20px; width: 100%;">
+    <tr style="background-color:#009fdc; color:white;">
+        <th>Date</th>
+        <th>Prediction</th>
+        <th>Probability</th>
+        <th>Doctor's Diagnosis</th>
+    </tr>
+    {% for analiza in diabet_results %}
+    <tr>
+        <td>{{ analiza.timestamp }}</td>
+        <td>{{ analiza.predictie }}</td>
+        <td>{{ analiza.probabilitate }}%</td>
+        <td>{{ analiza.diagnostic_doctor }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p style="color:gray; margin-top: 20px;">There are no diabetes results for this patient.</p>
+{% endif %}
+
+{% endblock %}

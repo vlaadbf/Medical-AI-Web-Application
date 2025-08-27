@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Your Diabetes Test Results</h2>
+
+{% for analiza in rezultate %}
+    <div style="border: 1px solid #aaa; margin: 10px; padding: 10px;">
+        <p><b>Upload Date:</b> {{ analiza.timestamp }}</p>
+        <p><b>Model Prediction:</b> {{ analiza.predictie }}</p>
+        <p><b>Probability:</b> {{ analiza.probabilitate }}%</p>
+        <p><b>Doctor's Diagnosis:</b> {{ analiza.diagnostic_doctor }}</p>
+        <p><b>Processed by:</b> {{ analiza.procesat_de }}</p>
+    </div>
+{% else %}
+    <p>You do not have any processed results yet.</p>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Înregistrare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #eaf6ff, #d7eaf8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-box {
+      background-color: #ffffff;
+      padding: 50px 40px;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h2 {
+      text-align: center;
+      color: #002b5b;
+      margin-bottom: 40px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px 30px;
+    }
+
+    .form-group {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+
+    input, select {
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      transition: border 0.3s ease;
+      font-size: 0.95rem;
+    }
+
+    input:focus, select:focus {
+      border-color: #0078d4;
+      outline: none;
+    }
+
+    #doctor-fields, #pacient-fields, #an-fumat {
+      grid-column: span 2;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      grid-column: span 2;
+    }
+
+    .primary-button, .secondary-button {
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .primary-button {
+      background-color: #00bcd4;
+      color: white;
+    }
+
+    .secondary-button {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover {
+      background-color: #34495e;
+    }
+
+    @media (max-width: 600px) {
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      #doctor-fields, #pacient-fields, #an-fumat, .button-container {
+        grid-column: span 1;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+      }
+    }
+  </style>
+  <script>
+    function toggleFields() {
+      const role = document.getElementById("role").value;
+      document.getElementById("pacient-fields").style.display = (role === "pacient") ? "block" : "none";
+      document.getElementById("doctor-fields").style.display = (role === "doctor") ? "block" : "none";
+    }
+
+    function toggleFumatorFields() {
+      const fumator = document.getElementById("smoker").value;
+      document.getElementById("an-fumat").style.display = (fumator === "true") ? "block" : "none";
+    }
+  </script>
+</head>
+<body>
+  <div class="form-box">
+    <h2>User Registration</h2>
+    <form method="POST">
+      <div class="form-group">
+        <label>First Name</label>
+        <input type="text" name="first_name" required>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" name="last_name" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label>Sex</label>
+        <select name="sex" required>
+          <option value="M">Male</option>
+          <option value="F">Female</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Birth Date</label>
+        <input type="date" name="birthdate" required>
+      </div>
+      <div class="form-group">
+        <label>County</label>
+        <select name="judet" required>
+          <option value="București">București</option>
+          <option value="Cluj">Cluj</option>
+          <option value="Iași">Iași</option>
+          <option value="Timiș">Timiș</option>
+          <option value="Brașov">Brașov</option>
+          <option value="Constanța">Constanța</option>
+          <option value="Sibiu">Sibiu</option>
+          <option value="Dolj">Dolj</option>
+          <option value="Bacău">Bacău</option>
+          <option value="Galați">Galați</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select name="role" id="role" onchange="toggleFields()" required>
+          <option value="">-</option>
+          <option value="pacient">Patient</option>
+          <option value="doctor">Doctor</option>
+        </select>
+      </div>
+
+      <div id="doctor-fields" style="display:none">
+        <div class="form-group">
+          <label>Hospital (Doctor)</label>
+          <input type="text" name="spital_doctor">
+        </div>
+      </div>
+
+      <div id="pacient-fields" style="display:none">
+        <div class="form-group">
+          <label>Hospital (Patient)</label>
+          <input type="text" name="spital_pacient">
+        </div>
+        <div class="form-group">
+          <label>Smoker</label>
+          <select name="smoker" id="smoker" onchange="toggleFumatorFields()">
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="form-group" id="an-fumat" style="display:none">
+          <label>Year Started Smoking</label>
+          <input type="number" name="smoker_since" min="1900" max="2100">
+        </div>
+      </div>
+
+      <div class="button-container">
+        <button type="submit" class="primary-button">REGISTER</button>
+        <a href="/login" class="secondary-button">LOGIN</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

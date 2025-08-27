@@ -1,0 +1,11 @@
+
+    {% extends "base.html" %}
+    {% block content %}
+    <h2>Pending Requests</h2>
+        {% for pacient in cereri %}
+            <p>{{ pacient.first_name }} {{ pacient.last_name }}
+            <a href="/aproba/{{ pacient.email }}">Approve</a></p>
+        {% else %}
+            <p>You have no new requests.</p>
+        {% endfor %}
+    {% endblock %}

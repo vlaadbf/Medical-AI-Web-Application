@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📤 Upload CT Images for Analysis</h2>
+
+{% if doctor %}
+    <p><strong>The images will be sent to:</strong> {{ doctor.first_name }} {{ doctor.last_name }}</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="images" multiple required><br><br>
+        <input type="submit" value="Încarcă imaginile">
+    </form>
+{% else %}
+    <p style="color: red;">❌ You are not associated with any approved doctor. Please submit a request first.</p>
+{% endif %}
+{% endblock %}

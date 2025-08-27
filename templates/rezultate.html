@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>📊 Analysis Results</h2>
+
+{% if result %}
+    <table border="1" cellpadding="6">
+        <tr>
+            <th>Date</th>
+            <th>Model Prediction</th>
+            <th>Doctor's Diagnosis</th>
+            <th>Analyzed Images</th>
+        </tr>
+        <tr>
+            <td>{{ result.date }}</td>
+            <td>{{ result.summary.label }} ({{ result.summary.score }})</td>
+            <td>{{ result.message }}</td>
+            <td>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                    {% for img in result.images[:4] %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ img) }}" style="width:100px; border-radius:6px;">
+                    {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
+{% else %}
+    <p style="color:gray;">There are no results available at the moment.</p>
+{% endif %}
+{% endblock %}

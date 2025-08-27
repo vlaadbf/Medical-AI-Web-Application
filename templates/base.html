@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title or "Dashboard" }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <p><strong>{{ role.upper() }}</strong></p>
+        <p>County: {{ user.judet }}</p>
+
+        <a href="{{ url_for('dashboard') }}" class="{% if request.path == '/dashboard' %}active{% endif %}">🏠 Home</a>
+
+        {% if role == "pacient" %}
+            <a href="{{ url_for('cerere') }}" class="{% if request.path == '/cerere' %}active{% endif %}">📨 Send Request</a>
+
+            {% if user.approved and doctor %}
+                <a href="{{ url_for('upload') }}" class="{% if request.path == '/upload' %}active{% endif %}">📤 Upload Images</a>
+                <a href="{{ url_for('upload_diabet_pdf') }}" class="{% if request.path == '/upload_diabet_pdf' %}active{% endif %}">📎 Upload Diabetes PDF</a>
+                <a href="{{ url_for('rezultate') }}" class="{% if request.path == '/rezultate' %}active{% endif %}">📝 Cancer Test Results</a>
+                <a href="{{ url_for('rezultate_diabet') }}" class="{% if request.path == '/rezultate_diabet' %}active{% endif %}">🧾 Diabetes Test Result</a>
+
+            {% endif %}
+
+        {% elif role == "doctor" %}
+            <a href="{{ url_for('cereri_pacienti') }}" class="{% if request.path == '/cereri_pacienti' %}active{% endif %}">📬 Patient Requests</a>
+            <a href="{{ url_for('pacientii_mei') }}" class="{% if request.path == '/pacientii_mei' %}active{% endif %}">🩺  My Patients</a>
+            <a href="{{ url_for('lista_pacienti_diabet') }}" class="{% if request.path == '/lista_pacienti_diabet' %}active{% endif %}">🧠 Diabetes Tests</a>
+        {% endif %}
+
+        <a href="{{ url_for('logout') }}">🚪 Logout</a>
+    </div>
+
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</body>
+</html>
+
+

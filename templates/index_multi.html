@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multi-Image Testing</title>
+</head>
+<body style="font-family:sans-serif;text-align:center;padding:40px">
+    <h2>🧠 Lung Cancer Detection - Multi-Image</h2>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="images" accept="image/*" multiple required>
+        <br><br>
+        <input type="submit" value="Prezice">
+    </form>
+
+    {% if results %}
+        <h3>🔎 Individual Results:</h3>
+        {% for r in results %}
+            <p><strong>{{ r.filename }}</strong>: {{ r.label }} ({{ r.confidence }})</p>
+            <img src="{{ r.image_url }}" width="250"><br><br>
+        {% endfor %}
+        <h3>📊 Patient Average: {{ mean_prediction }}</h3>
+    {% endif %}
+
+    {% if error %}
+        <p style="color:red">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

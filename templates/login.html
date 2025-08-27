@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <title>Autentificare</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #eaf6ff, #d7eaf8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #ffffff;
+      padding: 50px 40px;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    h2 {
+      color: #002b5b;
+      margin-bottom: 40px;
+      font-size: 1.8rem;
+    }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px 14px 46px;
+      border: none;
+      border-radius: 30px;
+      background: #f2f5f7;
+      font-size: 0.95rem;
+    }
+
+    .input-group i {
+      position: absolute;
+      top: 50%;
+      left: 16px;
+      transform: translateY(-50%);
+      color: #888;
+      font-size: 1rem;
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #555;
+      margin: 10px 0 30px;
+    }
+
+    .options a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .primary-button, .secondary-button {
+      padding: 12px 24px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .primary-button {
+      background-color: #00bcd4;
+      color: white;
+    }
+
+    .secondary-button {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    .primary-button:hover,
+    .secondary-button:hover {
+      background-color: #34495e;
+    }
+
+    /* Optional: font icons (emoji fallback shown here) */
+    .icon-mail::before { content: "📧"; }
+    .icon-lock::before { content: "🔒"; }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Welcome!</h2>
+    <form method="POST">
+      <div class="input-group">
+        <i class="icon-mail"></i>
+        <input type="email" name="email" placeholder="Your e-mail" required>
+      </div>
+      <div class="input-group">
+        <i class="icon-lock"></i>
+        <input type="password" name="password" placeholder="Your password" required>
+      </div>
+
+      <div class="button-group">
+        <button type="submit" class="primary-button">LOGIN</button>
+        <a href="/register" class="secondary-button">REGISTER</a>
+      </div>
+    </form>
+  </div>
+</body>
+</html>

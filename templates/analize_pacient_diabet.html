@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+  body {
+    background-color: #f4f7fb;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  .section-title {
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 30px 0 20px;
+    color: #002b5b;
+  }
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 24px;
+    padding: 0 30px 40px;
+  }
+  .card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .card h3 {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 6px;
+  }
+  .info-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 0.9rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .predict-score {
+    background: #e0f7fa;
+    border-left: 4px solid #00bcd4;
+    padding: 10px 14px;
+    border-radius: 10px;
+  }
+  .predict-score p {
+    margin: 3px 0;
+    font-size: 0.9rem;
+  }
+  .bar-container {
+    background: #cfd8dc;
+    border-radius: 10px;
+    height: 10px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00bcd4, #4dd0e1);
+  }
+  textarea {
+    width: 100%;
+    border: 1px solid #b0bec5;
+    border-radius: 10px;
+    padding: 8px;
+    font-size: 0.9rem;
+    resize: vertical;
+  }
+  .btn {
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+  .btn:hover {
+    background-color: #0097a7;
+  }
+</style>
+
+<h2 class="section-title">📂 Tests for {{ pacient.first_name }} {{ pacient.last_name }}</h2>
+<div class="grid-container">
+  {% for fname, analiza in analize %}
+  <div class="card">
+    <div class="info-line"><span>Glucose</span><span>{{ analiza.Glucose }}</span></div>
+    <div class="info-line"><span>BloodPressure</span><span>{{ analiza.BloodPressure }}</span></div>
+    <div class="info-line"><span>SkinThickness</span><span>{{ analiza.SkinThickness }}</span></div>
+    <div class="info-line"><span>Insulin</span><span>{{ analiza.Insulin }}</span></div>
+    <div class="info-line"><span>BMI</span><span>{{ analiza.BMI }}</span></div>
+    <div class="info-line"><span>DPF</span><span>{{ analiza.DiabetesPedigreeFunction }}</span></div>
+    <div class="info-line"><span>Age</span><span>{{ analiza.Age }}</span></div>
+
+    {% if fname in predictii %}
+    <div class="predict-score">
+      <p><strong>🔍 Prediction:</strong> {{ predictii[fname].verdict }}</p>
+      <p><strong>Probability:</strong> {{ predictii[fname].probabilitate }}%</p>
+      <div class="bar-container">
+        <div class="bar-fill" style="width: {{ predictii[fname].probabilitate }}%;"></div>
+      </div>
+    </div>
+    <form method="POST" action="{{ url_for('diagnoza_diabet', fisier=fname) }}">
+      <label>Diagnosis:</label>
+      <textarea name="diagnostic" rows="3" required></textarea>
+      <button class="btn">📤 Submit Result</button>
+    </form>
+    {% else %}
+    <form method="POST">
+      <input type="hidden" name="predict_file" value="{{ fname }}">
+      <button class="btn">🔎 Run Prediction</button>
+    </form>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

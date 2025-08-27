@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Medical Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body.home-page {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(to right, #eaf6ff, #d7eaf8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .home-container {
+            text-align: center;
+            background: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .home-container h1 {
+            font-size: 1.8rem;
+            color: #002b5b;
+            margin-bottom: 40px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .primary-button,
+        .secondary-button {
+            padding: 14px 26px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            min-width: 140px;
+            transition: background 0.3s ease;
+            border: none;
+            display: inline-block;
+            color: white;
+        }
+
+        .primary-button {
+            background-color: #00bcd4;
+        }
+
+        .secondary-button {
+            background-color: #6c757d;
+        }
+
+        .primary-button:hover,
+        .secondary-button:hover {
+            background-color: #34495e;
+        }
+
+        @media (max-width: 500px) {
+            .button-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .primary-button,
+            .secondary-button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body class="home-page">
+    <div class="home-container">
+        <h1>💻 Medical Application</h1>
+        <div class="button-container">
+            <a href="{{ url_for('register') }}" class="primary-button">📝 Register</a>
+            <a href="{{ url_for('login') }}" class="secondary-button">🔐 Login</a>
+        </div>
+    </div>
+</body>
+</html>
