@@ -1,0 +1,19 @@
+{
+  "Nume": "Popescu Andrei",
+  "Data nasterii": "1985-03-14",
+  "Data raportului": "2025-06-02",
+  "Glucose": 145.0,
+  "BloodPressure": 85.0,
+  "SkinThickness": 32.0,
+  "Insulin": 130.0,
+  "BMI": 33.2,
+  "DiabetesPedigreeFunction": 0.672,
+  "Age": 38.0,
+  "email": "pacient_vlad_4@example.com",
+  "timestamp": "20250605_120010",
+  "status": "procesat",
+  "predictie": "Pozitiv (are diabet)",
+  "probabilitate": 0.672,
+  "diagnostic_doctor": "este bine",
+  "procesat_de": "vlad@example.com"
+}

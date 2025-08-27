@@ -1,0 +1,19 @@
+{
+  "Nume": "Florin-Vlad Bul\u0103u",
+  "Data na\u0219terii": "1996-02-18",
+  "Data raportului": "2025-06-02",
+  "Glucose": 138.0,
+  "BloodPressure": 82.0,
+  "SkinThickness": 29.0,
+  "Insulin": 110.0,
+  "BMI": 31.7,
+  "DiabetesPedigreeFunction": 0.54,
+  "Age": 28.0,
+  "email": "pacient_vlad_14@example.com",
+  "timestamp": "20250624_123819",
+  "status": "procesat",
+  "predictie": "Negative (does not have diabetes)",
+  "probabilitate": 0.39590476190476187,
+  "diagnostic_doctor": "Hello,\r\n\r\nFollowing the analysis of the presented values for blood glucose (138 mg/dL), blood pressure (82 mmHg), skinfold thickness (29 mm), insulin level (110 \u00b5U/mL), body mass index (31.7), diabetes pedigree function (0.54), and age (28 years), our prediction model indicates a negative result for diabetes, with an estimated probability of 39.59%.\r\n\r\nThe model's result suggests that there are not enough indicators at this time to suspect the presence of diabetes. However, the blood glucose value is approaching the alert thresholds, and the body mass index exceeds 30, indicating obesity. We recommend adopting an active lifestyle and a balanced diet to reduce the risk of developing diabetes in the future.\r\n\r\nWe advise you to periodically monitor your blood glucose levels and continue regular check-ups with your specialist doctor.\r\n\r\nPlease do not hesitate to contact us for any further questions.\r\n\r\nAll the best,\r\nVlad",
+  "procesat_de": "vlad@example.com"
+}

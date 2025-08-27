@@ -1,0 +1,19 @@
+{
+  "Nume": "Florin-Vlad Bul\u0103u",
+  "Data na\u0219terii": "1996-02-18",
+  "Data raportului": "2025-06-02",
+  "Glucose": 138.0,
+  "BloodPressure": 82.0,
+  "SkinThickness": 29.0,
+  "Insulin": 110.0,
+  "BMI": 31.7,
+  "DiabetesPedigreeFunction": 0.54,
+  "Age": 28.0,
+  "email": "vlad1@example.com",
+  "timestamp": "20250701_205317",
+  "status": "procesat",
+  "predictie": "Negative (does not have diabetes)",
+  "probabilitate": 0.39590476190476187,
+  "diagnostic_doctor": "All good",
+  "procesat_de": "vlad@example.com"
+}
